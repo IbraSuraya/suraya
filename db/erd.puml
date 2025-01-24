@@ -1,0 +1,26 @@
+@startchen EntertaimentDigital
+left to right direction
+
+entity Users {
+}
+entity Categories <<weak>> {
+}
+entity Activities {
+}
+
+relationship Created {
+}
+Created -(0,N)- Categories
+Created -(1,1)- Users
+
+relationship Do {
+}
+Do -(0,N)- Users
+Do -(0,N)- Activities
+
+relationship Liked {
+}
+Liked -(0,N)- Users
+Liked -(0,N)- Activities
+
+@endchen
