@@ -1,1 +1,10 @@
-go mod init 
+[Github]
+- git status
+- git add .
+- git commit -m "message"
+- git push
+  - git push -u origin main
+- git log
+
+[Golang]
+- go mod init github.com/IbraSuraya/suraya

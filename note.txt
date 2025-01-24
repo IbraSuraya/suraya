@@ -1,2 +1,4 @@
 - create repository github.com/IbraSuraya/suraya
-- init project ibra-suraya
+- push "add file notes"
+- init project suraya
+- push mod suraya
