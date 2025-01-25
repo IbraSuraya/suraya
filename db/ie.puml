@@ -11,27 +11,32 @@ entity Users {
   email :	VARCHAR(30)
   phone :	VARCHAR(20)
   bio :		TEXT
-  birthdate : TIMESTAMP
-  * gender :	BOOLEAN
-  pr_pic_url : VARCHAR(255)
+  birthdate : DATE
+  * gender :	BOOLEAN <<TRUE is MAN>>
+  profile_pic_url : VARCHAR(255)
   bg_pic_url : VARCHAR(255)
   * created_at : TIMESTAMP
   * updated_at : TIMESTAMP
   deleted_at : TIMESTAMP
   * current_pass_hash :	VARCHAR(255)
-  * confirm_pass_hash :	VARCHAR(255)
   * before_pass_hash :	VARCHAR(255)
   * last_updated_pass_at :	TIMESTAMP
+  pass_salt	: VARCHAR(255)
 }
 entity Categories {
   * id : SERIAL <<PK>>
   ---
   * dummy
+  ---
+  * user_id INT <<FK>>
 }
 entity Activities {
   * id : SERIAL <<PK>>
   ---
   * dummy
+    ---
+  * user_id INT <<FK>>
+  * cat_id INT <<FK>>
 }
 
 entity Do {

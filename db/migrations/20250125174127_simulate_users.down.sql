@@ -1,0 +1,2 @@
+-- Reset record
+TRUNCATE TABLE users RESTART IDENTITY CASCADE;
