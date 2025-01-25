@@ -1,4 +1,4 @@
-@startchen EntertaimentDigital
+@startchen Entertaiment
 left to right direction
 
 entity Users {
@@ -8,19 +8,24 @@ entity Categories <<weak>> {
 entity Activities {
 }
 
-relationship Created {
+relationship Created_Cat {
 }
-Created -(0,N)- Categories
-Created -(1,1)- Users
+Created_Cat -(1,1)- Users
+Created_Cat -(0,N)- Categories
+
+relationship Created_Act {
+}
+Created_Act -(1,1)- Users
+Created_Act -(0,N)- Activities
 
 relationship Do {
 }
 Do -(0,N)- Users
 Do -(0,N)- Activities
 
-relationship Liked {
+relationship Categorized {
 }
-Liked -(0,N)- Users
-Liked -(0,N)- Activities
+Categorized -(1,1)- Categories
+Categorized -(1,N)- Activities
 
 @endchen

@@ -1,0 +1,49 @@
+@startuml Entertaiment
+
+entity Users {
+  * id : SERIAL <<PK>>
+  ---
+  * slug :	VARCHAR(50)
+  * username : VARCHAR(20) <<UNIQUE>>
+  f_name :	VARCHAR(20)
+  m_name :	VARCHAR(20)
+  l_name :	VARCHAR(20)
+  email :	VARCHAR(30)
+  phone :	VARCHAR(20)
+  bio :		TEXT
+  birthdate : TIMESTAMP
+  * gender :	BOOLEAN
+  pr_pic_url : VARCHAR(255)
+  bg_pic_url : VARCHAR(255)
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
+  deleted_at : TIMESTAMP
+  * current_pass_hash :	VARCHAR(255)
+  * confirm_pass_hash :	VARCHAR(255)
+  * before_pass_hash :	VARCHAR(255)
+  * last_updated_pass_at :	TIMESTAMP
+}
+entity Categories {
+  * id : SERIAL <<PK>>
+  ---
+  * dummy
+}
+entity Activities {
+  * id : SERIAL <<PK>>
+  ---
+  * dummy
+}
+
+entity Do {
+  * id_usr : INT
+  * id_act : INT
+  ---
+  * dummy
+}
+
+Users ||--o{ Categories : Created_Cat
+Users ||--o{ Activities : Created_Act
+Users }o--o{ Activities : Do
+Categories ||--|{ Activities : Categorized
+
+@enduml
