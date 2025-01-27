@@ -5,8 +5,10 @@ CREATE TABLE IF NOT EXISTS users (
   f_name      VARCHAR(20),
   m_name      VARCHAR(20),
   l_name      VARCHAR(20),
-  email       VARCHAR(255),
-  phone       VARCHAR(255),
+  email_encrypt VARCHAR(255),
+  key_email   VARCHAR(255),
+  phone_encrypt VARCHAR(255),
+  key_phone   VARCHAR(255),
   bio         TEXT,
   birthdate   DATE,
   gender      BOOLEAN NOT NULL,
@@ -18,6 +20,6 @@ CREATE TABLE IF NOT EXISTS users (
   current_pass_hash     VARCHAR(255) NOT NULL,
   before_pass_hash      VARCHAR(255) NOT NULL,
   last_updated_pass_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  pass_salt	            VARCHAR(255),
+  pass_salt	            VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );

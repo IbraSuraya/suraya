@@ -8,8 +8,10 @@ entity Users {
   f_name :	VARCHAR(20)
   m_name :	VARCHAR(20)
   l_name :	VARCHAR(20)
-  email :	VARCHAR(255)
-  phone :	VARCHAR(255)
+  email_encrypt :	VARCHAR(255)
+  key_email :	VARCHAR(255)
+  phone_encrypt :	VARCHAR(255)
+  key_phone :	VARCHAR(255)
   bio :		TEXT
   birthdate : DATE
   * gender :	BOOLEAN <<TRUE is MAN>>
@@ -21,7 +23,7 @@ entity Users {
   * current_pass_hash :	VARCHAR(255)
   * before_pass_hash :	VARCHAR(255)
   * last_updated_pass_at :	TIMESTAMP
-  pass_salt	: VARCHAR(255)
+  * pass_salt	: VARCHAR(255)
 }
 entity Categories {
   * id : SERIAL <<PK>>
