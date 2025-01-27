@@ -8,8 +8,8 @@ entity Users {
   f_name :	VARCHAR(20)
   m_name :	VARCHAR(20)
   l_name :	VARCHAR(20)
-  email :	VARCHAR(30)
-  phone :	VARCHAR(20)
+  email :	VARCHAR(255)
+  phone :	VARCHAR(255)
   bio :		TEXT
   birthdate : DATE
   * gender :	BOOLEAN <<TRUE is MAN>>
@@ -40,8 +40,8 @@ entity Activities {
 }
 
 entity Do {
-  * id_usr : INT
-  * id_act : INT
+  * user_id : INT
+  * act_id : INT
   ---
   * dummy
 }
