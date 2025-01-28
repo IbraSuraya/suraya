@@ -1,0 +1,805 @@
+openapi: '3.0.3'
+info:
+  title: API Suraya Entertainment
+  description: Specification for API Suraya Entertainment
+  version: 1.0.0
+  termsOfService: https://www.ibrasuraya.site
+  contact:
+    name: Ibra Suraya
+    email: ibra.9c@gmail.com
+    url: https://www.ibrasuraya.site
+servers:
+  - url: http://{env}.localhost:3000
+    description: Server API
+    variables:
+      env: 
+        description: Server Environment
+        default: dev
+        enum:
+          - dev
+          - deploy
+          - test
+          - prod
+externalDocs:
+  description: Youtube
+  url: https://www.youtube.com/@ibrasuraya
+paths:
+  /api/v1/users:
+    get:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Get all users
+      description: Get all users to know who is registered
+      parameters: 
+        - $ref: "#/components/parameters/queryPagingPage"
+        - $ref: "#/components/parameters/queryPagingSize"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesDataUsers"
+              examples:
+                success:
+                  description: Example success get all users registered
+                  value:
+                    data:
+                      - id: 1
+                        username: ibrasuraya
+                        name: Ibra Suraya
+                        profile_pic_url: https://www.ibrasuraya.site
+                        created_at: 2025-01-28 15:46:57.368086+07
+                        updated_at: 2025-01-28 15:46:57.368086+07
+        204:
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because no content
+                  value:
+                    message: No users at all
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        # 400: description: Bad Request
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+    post:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Create a new user
+      description: Create a new user with complete or partially data
+      requestBody:
+        description: Requirement data input for created new user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReqUserCompleted"
+            examples:
+              success:
+                description: Example data input required for created new user
+                value:
+                  username: ibrasuraya
+                  f_name: Ibra
+                  m_name: Hasan
+                  l_name: Suraya
+                  email: ibrasuraya@example.com
+                  phone: 123-456-7890
+                  bio: Ini bio ibra suraya
+                  birthdate: 1990-01-01
+                  gender: true
+                  profile_pic_url: http://example.com/profile.jpg
+                  bg_pic_url: http://example.com/background.jpg
+                  pass: currentpassword1
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesDataUser"
+              examples:
+                success:
+                  description: Example success create a new user with complete or partially data
+                  value:
+                    data:
+                      id: 1
+                      slug: ibra-suraya
+                      username: ibrasuraya
+                      f_name: Ibra
+                      m_name: Hasan
+                      l_name: Suraya
+                      email: ibrasuraya@gmail.com
+                      phone: 123-456-7890
+                      bio: Ini bio ibra suraya
+                      birthdate: 1990-01-01
+                      gender: true
+                      profile_pic_url: http://example.com/profile.jpg
+                      bg_pic_url: http://example.com/background.jpg
+                      created_at: 2025-01-28 15:46:57.368086+07
+                      updated_at: 2025-01-28 15:46:57.368086+07
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because bad request
+                  value:
+                    message: The 'name-field' field is required
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+  /api/v1/users/demography:
+    get:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Get data demography
+      description: Get data demography from all users
+      parameters: 
+        - $ref: "#/components/parameters/queryPagingPage"
+        - $ref: "#/components/parameters/queryPagingSize"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesDataDemography"
+              examples:
+                success:
+                  description: Example success data demography from all users
+                  value:
+                    data:
+                      - id: 1
+                        username: ibrasuraya
+                        gender: true
+                        birthdate: 2025-01-28
+                        created_at: 2025-01-28 15:46:57.368086+07
+                        updated_at: 2025-01-28 15:46:57.368086+07
+        204:
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because no content
+                  value:
+                    message: No users at all
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        # 400: description: Bad Request
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+  /api/v1/users/{username}:
+    get:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Get user by username
+      description: Get users by username to know who is registered
+      parameters:
+        - $ref: "#/components/parameters/pathUsername"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesDataUser"
+              examples:
+                success:
+                  description: Example success get user by username
+                  value:
+                    data:
+                      id: 1
+                      slug: ibra-suraya
+                      username: ibrasuraya
+                      f_name: Ibra
+                      m_name: Hasan
+                      l_name: Suraya
+                      email: ibrasuraya@gmail.com
+                      phone: 123-456-7890
+                      bio: Ini bio ibra suraya
+                      birthdate: 1990-01-01
+                      gender: true
+                      profile_pic_url: http://example.com/profile.jpg
+                      bg_pic_url: http://example.com/background.jpg
+                      created_at: 2025-01-28 15:46:57.368086+07
+                      updated_at: 2025-01-28 15:46:57.368086+07
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because bad request
+                  value:
+                    message: The 'name-field' field is required
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because user not found
+                  value:
+                    message: user id {username} not found
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+    put:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Replace all data user
+      description: Replace all data user with completed data
+      parameters:
+        - $ref: "#/components/parameters/pathUsername"
+      requestBody:
+        description: Requirement data input for replace all data user with completed data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReqUserCompleted"
+            examples:
+              success:
+                description: Example data input completed for replace all data
+                value:
+                  username: ibrasuraya
+                  f_name: Ibra
+                  m_name: Hasan
+                  l_name: Suraya
+                  email: ibrasuraya@example.com
+                  phone: 123-456-7890
+                  bio: Ini bio ibra suraya
+                  birthdate: 1990-01-01
+                  gender: true
+                  profile_pic_url: http://example.com/profile.jpg
+                  bg_pic_url: http://example.com/background.jpg
+                  pass: currentpassword1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesDataUser"
+              examples:
+                success:
+                  description: Example success replace all data user with completed data
+                  value:
+                    data:
+                      id: 1
+                      slug: ibra-suraya
+                      username: ibrasuraya
+                      f_name: Ibra
+                      m_name: Hasan
+                      l_name: Suraya
+                      email: ibrasuraya@gmail.com
+                      phone: 123-456-7890
+                      bio: Ini bio ibra suraya
+                      birthdate: 1990-01-01
+                      gender: true
+                      profile_pic_url: http://example.com/profile.jpg
+                      bg_pic_url: http://example.com/background.jpg
+                      created_at: 2025-01-28 15:46:57.368086+07
+                      updated_at: 2025-01-28 15:46:57.368086+07
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because bad request
+                  value:
+                    message: The 'name-field' field is required
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because user not found
+                  value:
+                    message: user id {username} not found
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+    delete:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Delete user by username
+      description: Delete user by username
+      parameters:
+        - $ref: "#/components/parameters/pathUsername"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                success:
+                  description: Return message because success delete user by username
+                  value:
+                    message: delete user id {username} is successfuly 
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because bad request
+                  value:
+                    message: The 'name-field' field is required
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because user not found
+                  value:
+                    message: user id {username} not found
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+  /api/v1/users/{username}/update-pass:
+    patch:
+      security:
+        - TokenAuth: []
+      tags:
+        - Users API
+      summary: Update data user (example - update password)
+      description: Update data password user
+      parameters:
+        - $ref: "#/components/parameters/pathUsername"
+      requestBody: 
+        description: Requirement data input for update password data user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReqUpdatePass"
+            examples:
+              success:
+                description: Example data input required for update data password user
+                value:
+                  pass: IniPasswordBaru
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                success:
+                  description: Return message because success update password
+                  value:
+                    message: update password user id {username} is successfuly 
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because bad request
+                  value:
+                    message: The 'name-field' field is required
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Unauthorized
+                  value:
+                    message: Authorization token is missing or invalid
+                    timestamp: 2025-01-28 15:46:57.368086+07 
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because user not found
+                  value:
+                    message: user id {username} not found
+                    timestamp: 2025-01-28 15:46:57.368086+07
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsesMessage"
+              examples:
+                return:
+                  description: Return message because Internal Server Error
+                  value:
+                    message: An error occurred on the server. Please try again later
+                    timestamp: 2025-01-28 15:46:57.368086+07
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: X-API-Token
+      description: Authentication for API Suraya
+  schemas:
+    ResponsesDataUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id: 
+                type: number
+              username:
+                type: string
+              name:
+                type: string
+              profile_pic_url:
+                type: string
+              created_at:
+                type: string
+                format: data-time
+              updated_at:
+                type: string
+                format: data-time
+    ResponsesDataUser:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id: 
+              type: number
+            slug:
+              type: string
+            username:
+              type: string
+            f_name:
+              type: string
+            m_name:
+              type: string
+            l_name:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            bio:
+              type: string
+            birthdate:
+              type: string
+              format: data-time
+            gender:
+              type: boolean
+            profile_pic_url:
+              type: string
+            bg_pic_url:
+              type: string
+            created_at:
+              type: string
+              format: data-time
+            updated_at:
+              type: string
+              format: data-time
+    ResponsesDataDemography:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id: 
+                type: number
+              username:
+                type: string
+              gender:
+                type: boolean
+              birthdate:
+                type: string
+                format: data-time
+              created_at:
+                type: string
+                format: data-time
+              updated_at:
+                type: string
+                format: data-time
+    ResponsesMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: data-time
+    ReqUserCompleted:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 20
+        f_name:
+          type: string
+          minLength: 0
+          maxLength: 20
+        m_name:
+          type: string
+          minLength: 0
+          maxLength: 20
+        l_name:
+          type: string
+          minLength: 0
+          maxLength: 20
+        email:
+          type: string
+          minLength: 0
+          maxLength: 255
+        phone:
+          type: string
+          minLength: 0
+          maxLength: 255
+        bio:
+          type: string
+          minLength: 0
+        birthdate:
+          type: string
+          format: data-time
+        gender:
+          type: boolean
+        profile_pic_url:
+          type: string
+          minLength: 0
+          maxLength: 255
+        bg_pic_url:
+          type: string
+          minLength: 0
+          maxLength: 255
+        pass:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+        - username
+        - gender
+        - pass
+    ReqUpdatePass:
+      type: object
+      properties:
+        pass:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+        - pass
+  parameters:
+    pathUsername:
+      name: username
+      in: path
+      description: username user
+      required: true
+      schema: 
+        type: string
+        nullable: false
+    queryPagingPage:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: number
+        default: 1
+    queryPagingSize:
+      name: size
+      in: query
+      required: false
+      schema:
+        type: number
+        default: 10
+
+# GET : Get all users to know who is registered
+# GET : Get data demografi (gender, age)
+# POST : Create a new user with complete data
+# POST : Create a new user with only the required data
+# GET ALL - Wrapped
+  # GET /users/{username}?fields=basic
+  # GET /users/{username}?fields=slug
+  # GET /users/{username}?fields=fullname
+  # GET /users/{username}?fields=contact
+  # GET /users/{username}?fields=birthday
+  # GET /users/{username}?fields=pictures
+  # GET /users/{username}?fields=password
+# PUT : Replace all data users
+# PATCH : update password user by id - Wrapped
+  # PATCH : update username user by id
+  # PATCH : update fullname user by id
+  # PATCH : update contact user by id
+  # PATCH : update bio user by id
+  # PATCH : update birthdate user by id
+  # PATCH : update gender user by id
+  # PATCH : update profile_pic_url user by id
+  # PATCH : update bg_pic_url user by id
+# DELETE : soft delete
+  # DELETE : permanen delete
+

@@ -11,17 +11,17 @@
 -- select record with column completed
 SELECT * FROM users;
 
--- /users
+-- /users 
   -- GET : Get all users to know who is registered
-  SELECT id, username, f_name, l_name, profile_pic_url, created_at FROM users;
+  SELECT id, username, f_name, l_name, profile_pic_url, created_at, updated_at FROM users;
   -- GET : Get data demografi (gender, age)
-  SELECT id, gender, birthdate, created_at FROM users;
+  SELECT id, usermame, gender, birthdate, created_at, updated_at FROM users;
   -- POST : Create a new user with complete data
   INSERT INTO users (
-    slug, username, f_name, m_name, l_name, email_encrypt, key_email, phone_encrypt, key_phone, bio, birthdate, gender, profile_pic_url, bg_pic_url, current_pass_hash, before_pass_hash, pass_salt ) VALUES ()
+    username, f_name, m_name, l_name, email_encrypt, key_email, phone_encrypt, key_phone, bio, birthdate, gender, profile_pic_url, bg_pic_url, current_pass_hash, before_pass_hash, pass_salt ) VALUES ()
   -- POST : Create a new user with only the required data
   INSERT INTO users (
-    slug, username, gender, current_pass_hash, before_pass_hash, pass_salt ) VALUES ()
+    username, gender, current_pass_hash, before_pass_hash, pass_salt ) VALUES ()
 
 -- /users/{user_id}
 -- GET
@@ -86,20 +86,19 @@ SELECT * FROM users;
 ------------------------------------------------------------------------------------------------
 
 -- VALIDASI PASSWORD without pass_salt
-SELECT (current_pass_hash = crypt('1', current_pass_hash)) 
-    AS password_match 
-FROM users 
-WHERE username = 'ibrasuraya1' ;
+  SELECT (current_pass_hash = crypt('1', current_pass_hash)) 
+      AS password_match 
+  FROM users 
+  WHERE username = 'ibrasuraya1' ;
 -- VALIDASI PASSWORD with pass_salt
-SELECT (current_pass_hash = crypt('3', pass_salt)) 
-    AS password_match 
-FROM users 
-WHERE username = 'ibrasuraya3' ;
-
+  SELECT (current_pass_hash = crypt('3', pass_salt)) 
+      AS password_match 
+  FROM users 
+  WHERE username = 'ibrasuraya3' ;
 -- SELECT with Verification
-SELECT * FROM users 
-WHERE username = 'ibrasuraya1' 
-AND current_pass_hash = crypt('1', current_pass_hash);
-SELECT * FROM users 
-WHERE username = 'ibrasuraya3' 
-AND current_pass_hash = crypt('3', pass_salt);
+  SELECT * FROM users 
+  WHERE username = 'ibrasuraya1' 
+  AND current_pass_hash = crypt('1', current_pass_hash);
+  SELECT * FROM users 
+  WHERE username = 'ibrasuraya3' 
+  AND current_pass_hash = crypt('3', pass_salt);
