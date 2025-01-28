@@ -46,4 +46,16 @@ INSERT INTO users (
   'EBp9gVw/gatWzVcPHl9sMg=='
 );
 
+-- insert data dummy with salt, key_email, key_phone generated random with only the required data
+INSERT INTO users (
+  slug, username, gender, current_pass_hash, before_pass_hash, pass_salt
+) VALUES (
+  'ibra-suraya',
+  'ibrasuraya3',
+  TRUE,  -- TRUE untuk laki-laki, FALSE untuk perempuan
+  'gYkOICcmBYwXxIkuMX1uJXVkfF6MyHkrdcJLyNIUqZI=',
+  'gYkOICcmBYwXxIkuMX1uJXVkfF6MyHkrdcJLyNIUqZI=',
+  'hBrMd79QaUyxSU+hDphEmA=='
+);
+
 COMMIT;

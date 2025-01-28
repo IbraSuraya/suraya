@@ -46,7 +46,7 @@ func TestCreate_Key(t *testing.T) {
 func TestHash_Argon2(t *testing.T) {
 	t.Run("Success Hash and Success Verif", func(t *testing.T) {
 		viper := config.NewViper()
-		data := "currentpassword2"
+		data := "currentpassword3"
 		hashed, salt, err := utils.HashArgon2(data, viper)
 
 		fmt.Printf("data (%v) : %v\n", len(data), data)
@@ -212,4 +212,10 @@ func TestAjh(t *testing.T) {
 	b := "b"
 	c := a + b
 	fmt.Println(c)
+}
+
+func TestCreate_Slug(t *testing.T){
+	fName := "ibra"
+	lName := "suraya"
+	assert.Equal(t, "ibra-suraya", utils.GenerateSlugUser(fName, lName))
 }
